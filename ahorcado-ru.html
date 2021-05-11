@@ -21,7 +21,13 @@
             let newRemainigLetters = remainigLetters;
             let lives = 7;
             while ((remainigLetters > 0) && (lives !== 0)){
-                alert("Жизней: " + lives + "\n" + answerArray.join(" ") + "\n" + remainigLetters + " букв, чтобы пройти"); 
+                alert("Жизней: " + lives + "\n" + answerArray.join(" ") + "\n" + remainigLetters + " букв, чтобы пройти");
+/// focus
+                function setFocus(){
+                        document.getElementById(prompt).focus();
+                    }
+
+
                 let guess = prompt("Угадай букву, или нажми Отмена для выхода из игры.");
                 if (guess === null){
                     break;
