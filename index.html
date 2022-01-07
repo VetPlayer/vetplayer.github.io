@@ -5,148 +5,226 @@
 		<title>Найди клад!</title>
 	</head>
 	<body>
+		<canvas id="canvas" width="300" height="300"></canvas>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<h1 id="main">Найди клад!</h1>
-
-		<p id="distance">С помощью кликов, найди клад, который зарыт где-то на карте</p>
-
-		<img id="map" width=600 height=600
-			src="map.jpg">
-
-		
 
 		<script>
-			let getRandomNumber = function (size) {
-				return Math.floor(Math.random() * size);
+// Настройка холста
+			let canvas = document.getElementById("canvas");
+			let ctx = canvas.getContext("2d");
+			let width = canvas.width;
+			let height = canvas.height;
+
+			let blockSize = 10;
+			let widthInBlocks = width/blockSize;
+			let heightInBlocks = height/blockSize;
+			
+			let score = 0;
+
+			let drawBorder = function () {
+				ctx.fillStyle = "Gray";
+				ctx.fillRect(0,0,width,blockSize);
+				ctx.fillRect(0,height - blockSize, width, blockSize);
+				ctx.fillRect(0,0,blockSize,height);
+				ctx.fillRect(width - blockSize, 0, blockSize, height);
 			};
 
-			let getDistance = function (event, target) {
-					let diffX = event.offsetX - target.x;
-					let diffY = event.offsetY - target.y;
-					return Math.sqrt((diffX * diffX) + (diffY * diffY));
-				};
+			let drawScore = function() {
+				ctx.font = "20px Courier";
+				ctx.fillStyle = "Black";
+				ctx.textAlign = "left";
+				ctx.textBaseline = "top";
+				ctx.fillText("Счёт: " + score, blockSize, blockSize);
+			};
 
-			let getDistanceHint = function (distance) {
-				if (distance < 20) {
-					return "Обожжешься!";
-				} else if (distance < 40) {
-					return "Очень-очень горячо";
-				} else if (distance < 60) {
-					return "Очень горячо";
-				} else if (distance < 80) {
-					return "Горячо";
-				} else if (distance < 160) {
-					return "Тепло";
-				} else if (distance < 320) {
-					return "Холодно";
-				} else if (distance < 550) {
-					return "Очень холодно";
+
+// Функция Circle
+			let circle = function (x, y, radius, fillCircle) {
+				ctx.beginPath();
+				ctx.arc(x, y, radius, 0, Math.PI * 2, false);
+				ctx.fillStyle = "Black";
+				if (fillCircle) {
+					ctx.fill();
 				} else {
-					return "Замерзнешь!";
+					ctx.stroke();
 				}
-			};	
-
-			let width = 600;
-			let height = 600;
-			let clicks = 0;
-			
-			let target = {
-				x: getRandomNumber(width),
-				y: getRandomNumber(height)
 			};
 
-			$("#map").click(function(event) {
-				clicks++;
+// Создаём конструктор Ball
+			let Ball = function () {
+				this.x = width / 2;
+				this.y = height / 2;
+				this.xSpeed = 1;
+				this.ySpeed = 0;
+				this.speed = 1;
+				this.radius = 10;
+			};
 
-				let distance = getDistance(event, target);
+// Создаём метод move
 
-				let distanceHint = getDistanceHint(distance);
-
-				$("#distance").text(distanceHint + ". " + "Сделано попыток: " + clicks + " из 10");
-
-				if (distance < 15) {
-					alert("Клад найден! Сделано кликов: " + clicks);
-					clicks = 0;
-					target = {
-						x: getRandomNumber(width),
-						y: getRandomNumber(height)
-					};
-				}
+			Ball.prototype.move = function () {
+				this.x += this.xSpeed * this.speed;
+				this.y += this.ySpeed * this.speed;
 				
-				if (clicks >= 10) {
-					alert("Вы проиграли. Клад не найден =(");
-					clicks = 0;
-					target = {
-						x: getRandomNumber(width),
-						y: getRandomNumber(height)
-					};
-					$("#distance").text("Начнём с начала?");
+				if (this.x < 0 || this.x > width) {
+        this.xSpeed = -this.xSpeed;
+		score++;
+      } else if (this.y < 0 || this.y > height) {
+        this.ySpeed = -this.ySpeed;
+		score++;
+      }
+    };
+	
+// Создаём метод draw
+			Ball.prototype.draw = function () {
+				circle(this.x, this.y, this.radius, true);
+			};
+
+// Создаём метод setDirection
+			Ball.prototype.setDirection = function (direction) {
+				if (direction === "up") {
+					this.xSpeed = 0;
+					this.ySpeed = -1;
+				} else if (direction === "down") {
+					this.xSpeed = 0;
+					this.ySpeed = 1;
+				} else if (direction === "left") {
+					this.xSpeed = -1;
+					this.ySpeed = 0;
+				} else if (direction === "right") {
+					this.xSpeed = 1;
+					this.ySpeed = 0;
+				} else if (direction === "stop") {
+					this.xSpeed = 0;
+					this.ySpeed = 0;
 				}
-				
+			};
+
+// Создаём метод setSpeed
+			Ball.prototype.setSpeed = function (newSpeed) {
+				if (newSpeed !== undefined) {
+					this.speed = newSpeed;
+				} 
+			};
+
+
+// Создаём метод setTomanio
+			Ball.prototype.setTomanio = function (tomanio) {
+				if (this.radius == 0) {
+				this.radius = 1;
+			} else if (tomanio === "menos") {
+					this.radius--;
+				} else if (tomanio === "mas") {
+					this.radius++;
+				}
+			};
+
+// Создаём метод setSpeedZX
+			Ball.prototype.setSpeedZX = function (speedZX) {
+				if (this.speed == 0) {
+					this.speed = 1;
+			} else if (speedZX === "menos") {
+				this.speed--;
+				} else if (speedZX === "mas") {
+					this.speed++;
+				}
+			};
+
+// Реакция на нажатия клавиш
+			let ball = new Ball();
+
+			let keyActions = {
+				32: "stop",
+				37: "left",
+				38: "up",
+				39: "right",
+				40: "down"
+			};
+	
+
+// Настройка скорости
+			let keySpeed = {
+				49: 1,
+				50: 2,
+				51: 3,
+				52: 4,
+				53: 5,
+				54: 6,
+				55: 7,
+				56: 8,
+				57: 9
+			};
+
+
+// Размер по CV
+			let keyTomanio = {
+				67: "menos",
+				86: "mas"
+			};
+
+// Скорость по ZX
+			let keySpeedZX = {
+							90: "menos",
+							88: "mas"
+						};
+
+
+			$("body").keydown(function (event) {
+      let direction = keyActions[event.keyCode];
+      let speed = keySpeed[event.keyCode];
+	  let tomanio = keyTomanio[event.keyCode];
+	  let speedZX = keySpeedZX[event.keyCode];
+      ball.setDirection(direction);
+      ball.setSpeed(speed);
+	  ball.setTomanio(tomanio);
+	  ball.setSpeedZX(speedZX);
+    });
+// Анимация мяча
+			setInterval(function() {
+				ctx.clearRect(0, 0, width, height);
+				ball.draw();
+				ball.move();
+				drawBorder();
+				drawScore();
+			}, 30);
+
+
+
+
+
+
+
+
+
+
+
+
+
+//1
+			
+			$("body").keydown(function (event) {
+				console.log(event.keyCode);
 			});
-				
-				
+/*
 			
-
-
-
-
-
-
-
-
-			/*let direccion = "derecha";
-			let myTop = 0;
-
-			$("#main").offset({ left: myTop,top: myTop });
-			
-			let moveHeading = function() {
-				if (direccion == "derecha") {
-					$("#main").offset({ left: myTop });
-					myTop++;
-					if (myTop > 200) {
-						myTop = 0;
-						direccion = "bajo";
-					}
-				} else if (direccion == "bajo") {
-					$("#main").offset({ top: myTop });
-					myTop++;
-					if (myTop > 200) {
-						myTop = 200;
-						direccion = "izquerda";
-					}
-				} else if (direccion == "izquerda") {
-					$("#main").offset({ left: myTop });
-					myTop--;
-					if (myTop < 0) {
-						myTop = 200;
-						direccion = "arriba";
-					}
-				} else if (direccion == "arriba") {
-					$("#main").offset({ top: myTop });
-					myTop--;
-					if (myTop < 0) {
-						myTop = 0;
-						direccion = "derecha";
-					}
-				}
+//2
+			let keyName = {
+				32:"space",
+				37:"left",
+				38:"up",
+				39:"right",
+				40:"down",
+				16:"shift",
+				13:"enter",
+				17:"ctrl",
+				18:"alt"
 			};
-			
-			let rty = setInterval(moveHeading, 100);
-			let clicks = 100;
-			let cantidad = 0;
-				$("#main").click(function() {
-				clearInterval(rty);
-				clicks -= 10;
-				cantidad++;
-				rty = setInterval(moveHeading, clicks);
-				if (cantidad == 10) {
-					$("#main").text("Eto pizdec");
-				};
-				console.log(clicks + " " + cantidad);
-			});	*/
+			$("body").keydown(function (event) {
+				console.log(keyName[event.keyCode]);
+			});
+
+			*/
 		</script>
 	</body>
 </html>
-
 
