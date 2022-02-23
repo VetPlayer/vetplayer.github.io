@@ -519,39 +519,42 @@ footer p {
 @media screen and (max-width: 992px) { 
   .hero {
    width: 100%;
-   height: 500px;
+   height: 550px;
  }
 
- .hero-block {
-  width: 60%;
-  margin: 20% 20%;
-  text-align: center;
-  padding: 2% 0% 1% 0%;
- }
+  .hero-block {
+    width: 66%;
+    text-align: center;
+    right: 0;
+    left: 0;
+    margin: 20% auto;
+  }
 
- .hero-h1 {
-  border-bottom: 2px solid white;
-  width: 68%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 5px;
-  font-size: 58px;
- }
+  .hero-h1 {
+    border-bottom: 2px solid white;
+    text-align: center;
+    right: 0;
+    left: 0;
+    margin: 5px auto 0px auto;
+    font-size: 54px;
+  }
 
- .hero-p {
-  font-size: 20px;
-  text-align: center;
- }
+  .hero-p {
+    font-size: 19px;
+    text-align: center;
+  }
 
- .hero-text p {
-   display: block;
-  font-size: 14px;
-  line-height: 18px;
-  text-align: center;
-  width: 70%;
-  margin-left: 15%;
-  margin-right: 15%;
-  margin-top: 63%;
-}
+  .hero-text p {
+    display: block;
+    font-size: 14px;
+    line-height: 18px;
+    text-align: center;
+    width: 70%;
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 70%;
+  }
 
 }
