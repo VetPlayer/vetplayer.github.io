@@ -17,8 +17,6 @@ body {
   background: #0f0f0f;
 }
 
-
-
 .navbar .container {
   height: inherit;
   display: flex;
@@ -215,11 +213,11 @@ nav a:hover {
 
 .sezonRelojos h2 {
   text-align: center;
-  font-family: sans-serif;
+  font-family: PT Sans, sans-serif;
 
   /* Ошибка */
-  font-style: Bold;
-  font-size: 36px;
+
+  font-size: 35px;
   color: #fff;
   margin-top: 8%;
 }
@@ -514,13 +512,11 @@ footer p {
   margin-left: 13%;
 }
 
-
-
-@media screen and (max-width: 992px) { 
+@media screen and (max-width: 992px) {
   .hero {
-   width: 100%;
-   height: 550px;
- }
+    width: 100%;
+    height: 550px;
+  }
 
   .hero-block {
     width: 66%;
@@ -557,4 +553,61 @@ footer p {
     margin-top: 70%;
   }
 
+  .sezonRelojos {
+    width: 100%;
+  }
+
+  .sezonRelojos h2 {
+    text-align: center;
+    font-family: PT Sans, sans-serif;
+    font-size: 30px;
+    color: #fff;
+    margin-top: 10%;
+  }
+
+  .relojos {
+    width: 100%;
+    display: block;
+  }
+
+  .reloj {
+    text-align: center;
+  }
+
+  .reloj img {
+    margin-bottom: 2px;
+  }
+
+  .reloj p {
+    color: #fff;
+    font-size: 16px;
+    line-height: 0.5em;
+  }
+
+  .newCollectionBlock {
+    width: 100%;
+  }
+
+  .newCollectionBlock div {
+    
+  
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  }
+
+
+
+
+
+
+
+  .collections img {
+    width: 100%;
+  }
+
+  .collectionBlock {
+    width: 100%;
+  }
 }
