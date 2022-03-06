@@ -4,9 +4,180 @@ body {
   background-color: #000;
 }
 
+html, body {
+  height: 100%;
+}
+
 /* menu */
 
-.navbar {
+
+.wrapper {
+
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0px auto;
+  padding: 0px 10px;
+}
+
+.header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 50;
+}
+
+.header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 2;
+}
+
+.header_body {
+ position: relative;
+ display: flex;
+ justify-content: space-between;
+ height: 80px;
+ align-items: center;
+}
+
+.header_logo {
+  font-family: Post No Bills Jaffna, sans-serif;
+  font-size: 46px;
+  color: #fff;
+  position: relative;
+  z-index: 3;
+}
+
+.header_burger {
+  display: none;
+}
+
+.header_list {
+  display: flex;
+  position: relative;
+  z-index: 2;
+}
+
+.header_list li {
+  list-style: none;
+  margin: 0px 0px 0px 20px;
+}
+
+.header_link {
+color: #fff;
+text-transform: uppercase;
+font-size: 18px;
+text-decoration: none;
+}
+
+
+@media (max-width:767px) {
+
+  body.lock {
+    overflow: hidden;
+  }
+
+  .header_body {
+    height: 50px;
+  }
+
+  .header_burger {
+    display: block;
+    position: relative;
+    width: 30px;
+    height: 20px;
+    position: relative;
+    z-index: 3;
+  }
+
+  .header_burger span {
+    position: absolute;
+    background-color: #fff;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    top: 9px;
+    transition: all 0.3s ease 0s;
+  }
+
+  .header_burger::before,
+  .header_burger::after {
+    content: '';
+    background-color: #fff;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    left: 0;
+    transition: all 0.3s ease 0s;
+  }
+
+  .header_burger::before {
+    top: 0;
+  }
+
+  .header_burger::after {
+    bottom: 0;
+  }
+
+  .header_burger.active span {
+    transform: scale(0);
+  }
+
+  .header_burger.active::before {
+    transform: rotate(45deg);
+    top: 9px;
+  }
+
+  .header_burger.active::after {
+    transform: rotate(-45deg);
+    bottom: 9px;
+  }
+
+  .header_menu {
+    position: fixed;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #000;
+    transition: all 0.3s ease 0s; 
+    padding: 70px 10px 20px 10px;
+  }
+
+  .header_menu.active {
+    top: 0;
+  }
+
+  .header_list {
+    display: block;
+  }
+
+  .header_list li {
+    margin: 0px 0px 20px 0px;
+  }
+
+  .header_link {
+    font-size: 24px;
+  }
+}
+
+
+
+
+
+
+
+
+/* .navbar {
   position: fixed;
   transition: top 0.3s;
   z-index: 10;
@@ -78,7 +249,7 @@ ul {
 
 nav a:hover {
   background: #1f1f1f;
-}
+} */
 
 /* menu */
 
@@ -589,18 +760,11 @@ footer p {
   }
 
   .newCollectionBlock div {
-    
-  
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   width: 100%;
   }
-
-
-
-
-
 
 
   .collections img {
