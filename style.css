@@ -680,7 +680,7 @@ footer p {
     font-size: 46px;
     position: relative;
     z-index: 3;
-    margin-top: 3px;
+    margin-top: 5px;
   }
 
   .hero {
@@ -824,14 +824,22 @@ footer p {
     display: block;
     text-align: center;
     height: 100%;
-    padding-top: 25px;
-    padding-bottom: 25px;
+    padding-top: 5px;
   }
   .sobre {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .categorias {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .envio {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
   }
   .envioBlock {
   }
