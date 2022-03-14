@@ -675,6 +675,14 @@ footer p {
 }
 
 @media screen and (max-width: 992px) {
+
+  .header_logo {
+    font-size: 46px;
+    position: relative;
+    z-index: 3;
+    margin-top: 3px;
+  }
+
   .hero {
     width: 100%;
     height: 550px;
@@ -817,7 +825,7 @@ footer p {
     text-align: center;
     height: 100%;
     padding-top: 25px;
-    padding-bottom: 0px;
+    padding-bottom: 25px;
   }
   .sobre {
   }
